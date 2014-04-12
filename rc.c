@@ -12,13 +12,14 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-int
-main(int argc, char *argv[]) {
+#define MAX_RETURN_DATA_SIZE 20
+
+int main(int argc, char *argv[]) {
 	int sockfd, numbytes;
 	long port;
     char *msg = NULL;
 
-    char buf[MAXDATASIZE];
+    char buf[MAX_RETURN_DATA_SIZE];
     struct hostent *host;
     struct sockaddr_in their_addr;
 
@@ -80,7 +81,7 @@ main(int argc, char *argv[]) {
         }
     }
 
-    if ((numbytes = recv(sockfd, buf, MAXDATASIZE - 1, 0)) == -1) {
+    if ((numbytes = recv(sockfd, buf, MAX_RETURN_DATA_SIZE - 1, 0)) == -1) {
         perror("recv()");
         exit(1);
     } else
