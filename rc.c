@@ -35,12 +35,12 @@ int main(int argc, char *argv[]) {
     } else
         printf("remote host is: %s\n", argv[1]);
 
-    if (argv[2] == NULL || argv[2]<2) {
+    if (argv[2] == NULL) {
         perror("no port...");
         exit(1);
     } else {
         port = strtol(argv[2], NULL, 10);;
-        printf("remote host port to send: %d\n", port);
+        printf("remote host port to send: %d\n", (int)port);
     }
 
     if (argv[3] == NULL ) {
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
         printf("socket() sockfd is OK...\n");
 
     their_addr.sin_family = AF_INET;
-    printf("sending message to host %s and port %d...\n", argv[1], port);
+    printf("sending message to host %s and port %d...\n", argv[1], (int)port);
     their_addr.sin_port = htons(port);
     their_addr.sin_addr = *((struct in_addr *) host->h_addr);
     memset(&(their_addr.sin_zero), '\0', 8);
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     } else {
         printf("connect() is OK...\n");
         int rc = send(sockfd, msg, strlen(msg)+strlen("\r\n"), 0);
-        printf("sending msg: %s\nsento() result = %d\n", msg, rc);
+        printf("sending msg: %s sento() result = %d\n", msg, rc);
 
         if (rc < 0) {
             close(sockfd);
